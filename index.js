@@ -43,6 +43,10 @@ function expandMatch(match, baseString) {
 }
 function detectCode() {
     content = document.getElementById("main-code-textarea").value.replaceAll(/ *([,=]) */g, "$1").replaceAll(/^ +/g, "")
+    if (content.length == 0) {
+        document.getElementById("result-code-textarea").value = ""
+        return
+    }
     code = ""
     inQuote = null
     bracketCounter = 0
@@ -80,7 +84,7 @@ function detectCode() {
     for ([regex, message] of ERRORS) {
         for (match of code.matchAll(regex)) {
             bc = code.substr(0, match.index)
-            lineIndex = bc.match(/\n/g).length
+            lineIndex = bc.match(/\n/g) == null ? 0 : bc.match(/\n/g).length
             if (lineIndex == null) {
                 lineIndex = 0
             }
@@ -88,7 +92,11 @@ function detectCode() {
             results.push(new ResultError(expandMatch(match, message), line))
         }
     }
-    document.getElementById("result-code-textarea").value = results.sort((a, b) => (a.lineno - b.lineno).sign).map(result => result.format).join("\n")
+    if (results.length > 0) {
+        document.getElementById("result-code-textarea").value = results.sort((a, b) => (a.lineno - b.lineno).sign).map(result => result.format).join("\n")
+    } else {
+        document.getElementById("result-code-textarea").value = "問題は見付かりませんでした。"
+    }
 }
 
 document.getElementById("main-code-textarea").setAttribute("placeholder", PLACEHOLDER)
