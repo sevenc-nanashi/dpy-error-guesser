@@ -21,8 +21,8 @@ https://github.com/sevenc-nanashi/dpy-error-suggester
 const ERRORS = [
     [/client=commands\.Bot/g, "commands.Botはbotという名前の変数に入れる事が推奨されています。"],
     [/@(client|bot)\.event\ndef (.+):/g, "@$1.eventに登録する関数は非同期（async def）である必要があります。"],
-    [/@(client|bot)\.event\n(?:async )?def (?!on_)(.+):/g, "@$1.eventに登録する関数はon_から始まる必要があります。"],
-    [/@(?:client|bot)\.event\nasync def on_(.+):[\s\S]+@(?:client|bot)\.event\nasync def on_\1/g, "イベント$1が重複しています。最後のon_$1だけが実行されます。"],
+    [/@(client|bot)\.event\n(?:async )?def (?!on_)[a-z_]+\(.*\):/g, "@$1.eventに登録する関数はon_から始まる必要があります。"],
+    [/@(?:client|bot)\.event\nasync def on_([a-z_]+)\(.*\):[\s\S]+@(?:client|bot)\.event\nasync def on_\1\(.*\)/g, "イベント$1が重複しています。最後のon_$1だけが実行されます。"],
 
 
 ]
