@@ -1,4 +1,7 @@
-const PLACEHOLDER = `
+let language = window.navigator.userLanguage || window.navigator.language;
+if (language == "ja") {
+
+    PLACEHOLDER = `
 import discord
 
 
@@ -10,7 +13,7 @@ async def on_ready():
 
 bot.run("Th1sIsN0t4T0k3n.B3cause.1fiSh0w1tB0tWillG3tH4cked")
 `.trim()
-const RESULT_PLACEHOLDER = `
+    RESULT_PLACEHOLDER = `
 discord.pyが動かない原因をコードから推測するWebツールです。
 
 上のテキストボックスにコードを入力すると推測されます。
@@ -18,14 +21,43 @@ discord.pyが動かない原因をコードから推測するWebツールです�
 コントリビューション大歓迎！
 https://github.com/sevenc-nanashi/dpy-error-suggester
 `.trim()
-const ERRORS = [
-    [/client=commands\.Bot/g, "commands.Botはbotという名前の変数に入れる事が推奨されています。"],
-    [/@(client|bot)\.event\ndef (.+):/g, "@$1.eventに登録する関数は非同期（async def）である必要があります。"],
-    [/@(client|bot)\.event\n(?:async )?def (?!on_)[a-z_]+\(.*\):/g, "@$1.eventに登録する関数はon_から始まる必要があります。"],
-    [/@(?:client|bot)\.event\nasync def on_([a-z_]+)\(.*\):[\s\S]+@(?:client|bot)\.event\nasync def on_\1\(.*\)/g, "イベント$1が重複しています。最後のon_$1だけが実行されます。"],
+    ERRORS = [
+        [/client=commands\.Bot/g, "commands.Botはbotという名前の変数に入れる事が推奨されています。"],
+        [/@(client|bot)\.event\ndef (.+):/g, "@$1.eventに登録する関数は非同期（async def）である必要があります。"],
+        [/@(client|bot)\.event\n(?:async )?def (?!on_)[a-z_]+\(.*\):/g, "@$1.eventに登録する関数はon_から始まる必要があります。"],
+        [/@(?:client|bot)\.event\nasync def on_([a-z_]+)\(.*\):[\s\S]+@(?:client|bot)\.event\nasync def on_\1\(.*\)/g, "イベント$1が重複しています。最後のon_$1だけが実行されます。"],
+    ]
+    couldNotFind = "問題を検出できませんでした。"
+} else {
+    PLACEHOLDER = `
+import discord
 
 
-]
+client = discord.Client()
+
+@bot.event
+async def on_ready():
+  print(f"Logged in as {client.user}")
+
+bot.run("Th1sIsN0t4T0k3n.B3cause.1fiSh0w1tB0tWillG3tH4cked")
+`.trim()
+    RESULT_PLACEHOLDER = `
+A web tool that guesses the wrong code from source code.
+
+Input textarea above to guess error.
+
+We welcome contributions!
+https://github.com/sevenc-nanashi/dpy-error-suggester
+`.trim()
+    ERRORS = [
+        [/client=commands\.Bot/g, "It is recommended that commands.Bot be placed in a variable named bot."],
+        [/@(client|bot)\.event\ndef (.+):/g, "Function for @$1.event should be async function (async def)."],
+        [/@(client|bot)\.event\n(?:async )?def (?!on_)[a-z_]+\(.*\):/g, "Name of function for @$1.event should be started with \"on_\"."],
+        [/@(?:client|bot)\.event\nasync def on_([a-z_]+)\(.*\):[\s\S]+@(?:client|bot)\.event\nasync def on_\1\(.*\)/g, "There're multiple event listener for on_$1, Last on_$1 will be called."],
+    ]
+    couldNotFind = "We couldn't find any problem."
+}
+
 class ResultError {
     constructor(message, lineno) {
         this.message = message
@@ -95,7 +127,7 @@ function detectCode() {
     if (results.length > 0) {
         document.getElementById("result-code-textarea").value = results.sort((a, b) => (a.lineno - b.lineno).sign).map(result => result.format).join("\n")
     } else {
-        document.getElementById("result-code-textarea").value = "問題は見付かりませんでした。"
+        document.getElementById("result-code-textarea").value = couldNotFind
     }
 }
 
