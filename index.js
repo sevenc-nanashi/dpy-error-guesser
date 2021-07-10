@@ -22,10 +22,10 @@ discord.pyが動かない原因をコードから推測するWebツールです�
 https://github.com/sevenc-nanashi/dpy-error-guesser
 `.trim()
     ERRORS = [
-        [/client=commands\.Bot/g, "commands.Botはbotという名前の変数に入れることが一般的です。"],
+        [/client=commands\.Bot/g, "?commands.Botはbotという名前の変数に入れることが一般的です。"],
         [/@([a-z_A-Z]+)\.event\ndef (.+):/g, "@$1.eventに登録する関数は非同期（async def）である必要があります。"],
         [/@([a-z_A-Z]+)\.event\n(?:async )?def (?!on_)[a-z_]+\(.*\):/g, "@$1.eventに登録する関数はon_から始まる必要があります。"],
-        [/@(?:[a-z_A-Z]+)\.event\nasync def on_([a-z_]+)\(.*\):[\s\S]+@(?:[a-z_A-Z]+)\.event\nasync def on_\1\(.*\)/g, "イベント$1が重複しています。最後のon_$1だけが実行されます。"],
+        [/@(?:[a-z_A-Z]+)\.event\nasync def on_([a-z_]+)\(.*\):[\s\S]+@(?:[a-z_A-Z]+)\.event\nasync def on_\1\(.*\)/g, "イベント on_$1が重複しています。最後のon_$1だけが実行されます。"],
     ]
     couldNotFind = "問題を検出できませんでした。"
 } else {
@@ -61,7 +61,7 @@ https://github.com/sevenc-nanashi/dpy-error-guesser
         "#input-container h2": "Input",
         "label[for='main-code-textarea']": "Source code",
         "#result-container h2": "Result",
-        "label[for='result-code-textarea']": "Source code" 
+        "label[for='result-code-textarea']": "Source code"
     }
     for ([selector, text] of Object.entries(replaces)) {
         document.querySelector(selector).innerText = text
@@ -75,7 +75,11 @@ class ResultError {
     }
 
     get format() {
-        return `${this.lineno} : ${this.message}`
+        if (message.startsWith("?")) {
+            return `（${this.lineno} : ${this.message.substr(1)}）`
+        } else {
+            return `${this.lineno} : ${this.message}`
+        }
     }
 }
 
