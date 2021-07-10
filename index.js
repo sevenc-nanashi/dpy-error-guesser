@@ -19,7 +19,7 @@ discord.pyが動かない原因をコードから推測するWebツールです�
 上のテキストボックスにコードを入力すると推測されます。
 
 コントリビューション大歓迎！
-https://github.com/sevenc-nanashi/dpy-error-suggester
+https://github.com/sevenc-nanashi/dpy-error-guesser
 `.trim()
     ERRORS = [
         [/client=commands\.Bot/g, "commands.Botはbotという名前の変数に入れる事が推奨されています。"],
@@ -47,7 +47,7 @@ A web tool that guesses the wrong code from source code.
 Input textarea above to guess error.
 
 We welcome contributions!
-https://github.com/sevenc-nanashi/dpy-error-suggester
+https://github.com/sevenc-nanashi/dpy-error-guesser
 `.trim()
     ERRORS = [
         [/client=commands\.Bot/g, "It is recommended that commands.Bot be placed in a variable named bot."],
