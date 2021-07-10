@@ -22,7 +22,7 @@ discord.pyが動かない原因をコードから推測するWebツールです�
 https://github.com/sevenc-nanashi/dpy-error-guesser
 `.trim()
     ERRORS = [
-        [/client=commands\.Bot/g, "commands.Botはbotという名前の変数に入れる事が推奨されています。"],
+        [/client=commands\.Bot/g, "commands.Botはbotという名前の変数に入れることが一般的です。"],
         [/@(client|bot)\.event\ndef (.+):/g, "@$1.eventに登録する関数は非同期（async def）である必要があります。"],
         [/@(client|bot)\.event\n(?:async )?def (?!on_)[a-z_]+\(.*\):/g, "@$1.eventに登録する関数はon_から始まる必要があります。"],
         [/@(?:client|bot)\.event\nasync def on_([a-z_]+)\(.*\):[\s\S]+@(?:client|bot)\.event\nasync def on_\1\(.*\)/g, "イベント$1が重複しています。最後のon_$1だけが実行されます。"],
@@ -50,7 +50,7 @@ We welcome contributions!
 https://github.com/sevenc-nanashi/dpy-error-guesser
 `.trim()
     ERRORS = [
-        [/client=commands\.Bot/g, "It is recommended that commands.Bot be placed in a variable named bot."],
+        [/client=commands\.Bot/g, "commands.Bot is usually placed in a variable named bot."],
         [/@(client|bot)\.event\ndef (.+):/g, "Function for @$1.event should be async function (async def)."],
         [/@(client|bot)\.event\n(?:async )?def (?!on_)[a-z_]+\(.*\):/g, "Name of function for @$1.event should be started with \"on_\"."],
         [/@(?:client|bot)\.event\nasync def on_([a-z_]+)\(.*\):[\s\S]+@(?:client|bot)\.event\nasync def on_\1\(.*\)/g, "There're multiple event listener for on_$1, Last on_$1 will be called."],
