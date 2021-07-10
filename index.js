@@ -56,6 +56,16 @@ https://github.com/sevenc-nanashi/dpy-error-suggester
         [/@(?:client|bot)\.event\nasync def on_([a-z_]+)\(.*\):[\s\S]+@(?:client|bot)\.event\nasync def on_\1\(.*\)/g, "There're multiple event listener for on_$1, Last on_$1 will be called."],
     ]
     couldNotFind = "We couldn't find any problem."
+
+    replaces = {
+        "#input-container h2": "Input",
+        "label[for='main-code-textarea']": "Source code",
+        "#result-container h2": "Result",
+        "label[for='result-code-textarea']": "Source code" 
+    }
+    for ([selector, text] of Object.entries(replaces)) {
+        document.querySelector(selector).innerText = text
+    }
 }
 
 class ResultError {
