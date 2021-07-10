@@ -20,7 +20,7 @@
     <div id="input-container" class="form-container">
       <h2>入力</h2>
       <div class="form-group is-input">
-        <label for="main-code-textarea">メインコード</label>
+        <label class="textarea-info" for="main-code-textarea">メインコード</label>
         <textarea class="form-control code" id="main-code-textarea"></textarea>
       </div>
       <!-- <div class="form-group is-input">
@@ -31,7 +31,11 @@
     <div id="result-container" class="form-container">
       <h2>検出結果</h2>
       <div class="form-group is-input">
-        <label for="result-code-textarea">メインコード</label>
+        <label class="textarea-info" for="result-code-textarea">メインコード</label>
+        <span id="result-show-verbose">
+          <label for="result-show-verbose-input">警告を全て表示</label>
+          <input id="result-show-verbose-input" type="checkbox" checked>
+        </span>
         <textarea class="form-control code" id="result-code-textarea" disabled></textarea>
       </div>
       <!-- <div class="form-group is-input">

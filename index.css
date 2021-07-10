@@ -42,3 +42,11 @@ textarea.code {
 .form-group {
     height: calc(100% - 4rem)
 }
+
+#result-show-verbose{
+    float: right;
+}
+
+.textarea-info{
+    font-weight: bold;
+}
