@@ -75,7 +75,7 @@ class ResultError {
     }
 
     get format() {
-        if (message.startsWith("?")) {
+        if (this.message.startsWith("?")) {
             return `（${this.lineno} : ${this.message.substr(1)}）`
         } else {
             return `${this.lineno} : ${this.message}`
