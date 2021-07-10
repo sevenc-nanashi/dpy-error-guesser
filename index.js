@@ -88,7 +88,7 @@ function expandMatch(match, baseString) {
     return baseString
 }
 function detectCode() {
-    content = document.getElementById("main-code-textarea").value.replaceAll(/ *([,=]) */g, "$1").replaceAll(/^ +/g, "")
+    content = document.getElementById("main-code-textarea").value.replaceAll(/ *([,=]) */g, "$1").replaceAll(/^ +/g, "").replaceAll(/#.*/g, "")
     if (content.length == 0) {
         document.getElementById("result-code-textarea").value = ""
         return
